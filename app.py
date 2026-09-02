@@ -132,76 +132,34 @@ if uploaded_file is not None:
     100
         )
         # ---------------- DASHBOARD ----------------
+        
+    st.divider()
+    st.subheader("📊 Resume Performance")
 
-st.divider()
-st.subheader("📊 Resume Performance")
+    col1, col2, col3 = st.columns(3)
 
-# Top metrics
-col1, col2, col3 = st.columns(3)
+    with col1:
+        st.metric("📄 Resume Score", f"{score}/100")
 
-with col1:
-    st.metric("📄 Resume Score", f"{score}/100")
+    with col2:
+        st.metric("🛠️ Skills Found", len(found_skills))
 
-with col2:
-    st.metric("🛠️ Skills Found", len(found_skills))
+    with col3:
+        st.metric("📄 Resume Words", len(text.split()))
 
-with col3:
-    st.metric("📝 Resume Words", len(text.split()))
+    st.markdown("### 📊 Score Breakdown")
 
-st.markdown("### 📈 Score Breakdown")
+    b1, b2 = st.columns(2)
 
-# Score cards
-b1, b2 = st.columns(2)
+    with b1:
+        st.write("🛠️ **Technical Skills**")
+        st.progress(skill_score / 40)
+        st.caption(f"{skill_score}/40 points")
 
-with b1:
-    st.write("🛠️ **Technical Skills**")
-    st.progress(skill_score / 40)
-    st.caption(f"{skill_score}/40 points")
-
-with b2:
-    st.write("📁 **Projects**")
-    st.progress(project_score / 20)
-    st.caption(f"{project_score}/20 points")
-
-b3, b4 = st.columns(2)
-
-with b3:
-    st.write("🎓 **Education**")
-    st.progress(education_score / 20)
-    st.caption(f"{education_score}/20 points")
-
-with b4:
-    st.write("📧 **Contact Information**")
-    st.progress(contact_score / 20)
-    st.caption(f"{contact_score}/20 points")
-
-st.markdown("---")
-
-# Overall score
-st.write("🏆 **Overall Resume Score**")
-st.progress(score / 100)
-
-if score >= 80:
-    st.success(f"Excellent Resume — {score}/100")
-elif score >= 60:
-    st.info(f"Good Resume — {score}/100")
-else:
-    st.warning(f"Needs Improvement — {score}/100")
-
-
-    # ---------------- DETECTED SKILLS ----------------
-    st.subheader("🛠️ Detected Skills")
-
-    if found_skills:
-
-        skill_text = " • ".join(
-            ["✅ " + skill for skill in found_skills]
-        )
-
-        st.write(skill_text)
-
-    else:
-        st.warning("No matching technical skills found.")
+    with b2:
+        st.write("📁 **Projects**")
+        st.progress(project_score / 20)
+        st.caption(f"{project_score}/20 points")
 
 
     # ---------------- JOB MATCHING ----------------
