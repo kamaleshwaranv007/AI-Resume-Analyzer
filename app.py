@@ -161,7 +161,17 @@ if uploaded_file is not None:
         st.progress(project_score / 20)
         st.caption(f"{project_score}/20 points")
 
+    b3, b4 = st.columns(2)
 
+    with b3:
+       st.write("🎓 **Education**")
+       st.progress(education_score / 20)
+       st.caption(f"{education_score}/20 points")
+
+    with b4:
+       st.write("📧 **Contact Information**")
+       st.progress(contact_score / 20)
+       st.caption(f"{contact_score}/20 points")
     # ---------------- JOB MATCHING ----------------
     if job_description.strip():
 
