@@ -128,42 +128,65 @@ if uploaded_file is not None:
     ) else 0
 
     score = min(
-        skill_score + project_score + education_score + contact_score,
-        100
-    )
+    skill_score + project_score + education_score + contact_score,
+    100
+        )
+        # ---------------- DASHBOARD ----------------
 
+st.divider()
+st.subheader("📊 Resume Performance")
 
-    # ---------------- DASHBOARD ----------------
-    st.divider()
+# Top metrics
+col1, col2, col3 = st.columns(3)
 
-    col1, col2, col3 = st.columns(3)
+with col1:
+    st.metric("📄 Resume Score", f"{score}/100")
 
-    with col1:
-        st.metric("📊 Resume Score", f"{score}/100")
+with col2:
+    st.metric("🛠️ Skills Found", len(found_skills))
 
-    with col2:
-        st.metric("🛠️ Skills Found", len(found_skills))
+with col3:
+    st.metric("📝 Resume Words", len(text.split()))
 
-    with col3:
-        st.metric("📄 Resume Words", len(text.split()))
-        st.divider()
+st.markdown("### 📈 Score Breakdown")
 
-        st.subheader("📊 Resume Score Breakdown")
+# Score cards
+b1, b2 = st.columns(2)
 
-        st.write("🛠️ Technical Skills")
-        st.progress(min(skill_score / 40, 1.0))
+with b1:
+    st.write("🛠️ **Technical Skills**")
+    st.progress(skill_score / 40)
+    st.caption(f"{skill_score}/40 points")
 
-        st.write("📁 Projects")
-        st.progress(project_score / 20)
+with b2:
+    st.write("📁 **Projects**")
+    st.progress(project_score / 20)
+    st.caption(f"{project_score}/20 points")
 
-        st.write("🎓 Education")
-        st.progress(education_score / 20)
+b3, b4 = st.columns(2)
 
-        st.write("📧 Contact Information")
-        st.progress(contact_score / 20)
+with b3:
+    st.write("🎓 **Education**")
+    st.progress(education_score / 20)
+    st.caption(f"{education_score}/20 points")
 
-        st.write(f"🏆 Overall Resume Score: {score}/100")
-        st.progress(score / 100)
+with b4:
+    st.write("📧 **Contact Information**")
+    st.progress(contact_score / 20)
+    st.caption(f"{contact_score}/20 points")
+
+st.markdown("---")
+
+# Overall score
+st.write("🏆 **Overall Resume Score**")
+st.progress(score / 100)
+
+if score >= 80:
+    st.success(f"Excellent Resume — {score}/100")
+elif score >= 60:
+    st.info(f"Good Resume — {score}/100")
+else:
+    st.warning(f"Needs Improvement — {score}/100")
 
 
     # ---------------- DETECTED SKILLS ----------------
