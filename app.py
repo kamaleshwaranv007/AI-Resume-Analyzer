@@ -146,6 +146,24 @@ if uploaded_file is not None:
 
     with col3:
         st.metric("📄 Resume Words", len(text.split()))
+        st.divider()
+
+        st.subheader("📊 Resume Score Breakdown")
+
+        st.write("🛠️ Technical Skills")
+        st.progress(min(skill_score / 40, 1.0))
+
+        st.write("📁 Projects")
+        st.progress(project_score / 20)
+
+        st.write("🎓 Education")
+        st.progress(education_score / 20)
+
+        st.write("📧 Contact Information")
+        st.progress(contact_score / 20)
+
+        st.write(f"🏆 Overall Resume Score: {score}/100")
+        st.progress(score / 100)
 
 
     # ---------------- DETECTED SKILLS ----------------
