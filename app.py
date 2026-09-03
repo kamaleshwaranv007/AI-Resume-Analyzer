@@ -2,7 +2,6 @@ import streamlit as st
 import re
 from io import BytesIO
 
-# PDF and DOCX readers
 from pypdf import PdfReader
 from docx import Document
 
@@ -31,8 +30,7 @@ skills = [
     "React", "Node.js",
     "REST API",
     "AWS", "Azure",
-    "Power BI",
-    "Excel"
+    "Power BI", "Excel"
 ]
 
 
@@ -41,7 +39,6 @@ def extract_text(uploaded_file):
 
     file_name = uploaded_file.name.lower()
 
-    # PDF
     if file_name.endswith(".pdf"):
         reader = PdfReader(uploaded_file)
         text = ""
@@ -53,10 +50,8 @@ def extract_text(uploaded_file):
 
         return text
 
-    # DOCX
     elif file_name.endswith(".docx"):
         document = Document(BytesIO(uploaded_file.getvalue()))
-
         text = ""
 
         for paragraph in document.paragraphs:
@@ -64,9 +59,11 @@ def extract_text(uploaded_file):
 
         return text
 
-    # TXT
     elif file_name.endswith(".txt"):
-        return uploaded_file.getvalue().decode("utf-8", errors="ignore")
+        return uploaded_file.getvalue().decode(
+            "utf-8",
+            errors="ignore"
+        )
 
     return ""
 
@@ -106,6 +103,7 @@ if uploaded_file is not None:
         if re.search(pattern, text, re.IGNORECASE):
             found_skills.append(skill)
 
+
     # ---------------- RESUME SCORE ----------------
     skill_score = min(len(found_skills) * 4, 40)
 
@@ -128,11 +126,12 @@ if uploaded_file is not None:
     ) else 0
 
     score = min(
-    skill_score + project_score + education_score + contact_score,
-    100
-        )
-        # ---------------- DASHBOARD ----------------
-        
+        skill_score + project_score + education_score + contact_score,
+        100
+    )
+
+
+    # ---------------- DASHBOARD ----------------
     st.divider()
     st.subheader("📊 Resume Performance")
 
@@ -145,8 +144,10 @@ if uploaded_file is not None:
         st.metric("🛠️ Skills Found", len(found_skills))
 
     with col3:
-        st.metric("📄 Resume Words", len(text.split()))
+        st.metric("📝 Resume Words", len(text.split()))
 
+
+    # ---------------- SCORE BREAKDOWN ----------------
     st.markdown("### 📊 Score Breakdown")
 
     b1, b2 = st.columns(2)
@@ -164,15 +165,212 @@ if uploaded_file is not None:
     b3, b4 = st.columns(2)
 
     with b3:
-       st.write("🎓 **Education**")
-       st.progress(education_score / 20)
-       st.caption(f"{education_score}/20 points")
+        st.write("🎓 **Education**")
+        st.progress(education_score / 20)
+        st.caption(f"{education_score}/20 points")
 
     with b4:
-       st.write("📧 **Contact Information**")
-       st.progress(contact_score / 20)
-       st.caption(f"{contact_score}/20 points")
-    # ---------------- JOB MATCHING ----------------
+        st.write("📧 **Contact Information**")
+        st.progress(contact_score / 20)
+        st.caption(f"{contact_score}/20 points")
+
+
+    # =========================================================
+    #                    ATS ANALYSIS
+    # =========================================================
+
+    st.divider()
+    st.subheader("📋 ATS Resume Analysis")
+
+    ats_score = 0
+    ats_suggestions = []
+
+    # Contact Information
+    has_email = bool(
+        re.search(
+            r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}",
+            text
+        )
+    )
+
+    has_phone = bool(
+        re.search(
+            r"(\+91[\s-]?)?[6-9]\d{9}",
+            text
+        )
+    )
+
+    if has_email:
+        ats_score += 10
+    else:
+        ats_suggestions.append(
+            "Add a professional email address."
+        )
+
+    if has_phone:
+        ats_score += 10
+    else:
+        ats_suggestions.append(
+            "Add a valid phone number."
+        )
+
+
+    # Resume Sections
+    section_patterns = {
+        "Education": r"\b(education|academic|qualification)\b",
+        "Projects": r"\b(project|projects)\b",
+        "Skills": r"\b(skills|technical skills|technologies)\b",
+        "Experience": r"\b(experience|work experience|employment)\b",
+        "Summary": r"\b(summary|profile|objective|career objective)\b"
+    }
+
+    section_results = {}
+
+    for section, pattern in section_patterns.items():
+
+        found = bool(
+            re.search(
+                pattern,
+                text,
+                re.IGNORECASE
+            )
+        )
+
+        section_results[section] = found
+
+        if found:
+            ats_score += 10
+
+
+    # Suggestions for missing sections
+    if not section_results["Summary"]:
+        ats_suggestions.append(
+            "Add a professional summary or career objective."
+        )
+
+    if not section_results["Skills"]:
+        ats_suggestions.append(
+            "Add a dedicated Technical Skills section."
+        )
+
+    if not section_results["Projects"]:
+        ats_suggestions.append(
+            "Add relevant academic or personal projects."
+        )
+
+    if not section_results["Education"]:
+        ats_suggestions.append(
+            "Add your education details."
+        )
+
+    if not section_results["Experience"]:
+        ats_suggestions.append(
+            "Consider adding internship, work or practical experience."
+        )
+
+
+    # Keyword / Action Word Check
+    action_words = [
+        "developed",
+        "created",
+        "designed",
+        "implemented",
+        "managed",
+        "built",
+        "analyzed",
+        "optimized",
+        "improved",
+        "developed"
+    ]
+
+    action_word_found = any(
+        re.search(
+            r"\b" + word + r"\b",
+            text,
+            re.IGNORECASE
+        )
+        for word in action_words
+    )
+
+    if action_word_found:
+        ats_score += 10
+    else:
+        ats_suggestions.append(
+            "Use strong action words such as Developed, Built, Designed and Implemented."
+        )
+
+
+    # Final ATS score
+    ats_score = min(ats_score, 100)
+
+
+    # ---------------- ATS SCORE DISPLAY ----------------
+    ats_col1, ats_col2 = st.columns(2)
+
+    with ats_col1:
+        st.metric(
+            "📋 ATS Score",
+            f"{ats_score}/100"
+        )
+
+    with ats_col2:
+
+        if ats_score >= 80:
+            st.success("🟢 ATS Friendly Resume")
+
+        elif ats_score >= 60:
+            st.warning("🟡 Resume can be improved")
+
+        else:
+            st.error("🔴 Resume needs improvement")
+
+
+    st.progress(ats_score / 100)
+
+
+    # ---------------- ATS SECTION CHECK ----------------
+    st.write("### 📑 Resume Sections")
+
+    section_col1, section_col2 = st.columns(2)
+
+    for index, (section, found) in enumerate(
+        section_results.items()
+    ):
+
+        column = (
+            section_col1
+            if index % 2 == 0
+            else section_col2
+        )
+
+        with column:
+
+            if found:
+                st.write(f"✅ {section}")
+
+            else:
+                st.write(f"❌ {section}")
+
+
+    # ---------------- ATS SUGGESTIONS ----------------
+    st.write("### 💡 ATS Improvement Suggestions")
+
+    if ats_suggestions:
+
+        for suggestion in ats_suggestions:
+            st.write("🔹", suggestion)
+
+    else:
+
+        st.success(
+            "🎉 Your resume is well structured for ATS!"
+        )
+
+
+    # =========================================================
+    #                    JOB MATCHING
+    # =========================================================
+
     if job_description.strip():
 
         st.divider()
@@ -191,24 +389,30 @@ if uploaded_file is not None:
             ):
                 job_skills.append(skill)
 
+
         matched_skills = [
-            skill for skill in job_skills
+            skill
+            for skill in job_skills
             if skill in found_skills
         ]
 
         missing_skills = [
-            skill for skill in job_skills
+            skill
+            for skill in job_skills
             if skill not in found_skills
         ]
+
 
         if job_skills:
 
             match_percentage = int(
-                len(matched_skills) /
-                len(job_skills) * 100
+                len(matched_skills)
+                / len(job_skills)
+                * 100
             )
 
         else:
+
             match_percentage = 0
 
 
@@ -226,6 +430,7 @@ if uploaded_file is not None:
                 st.write("✅", skill)
 
         else:
+
             st.write("No matching skills found.")
 
 
@@ -237,12 +442,17 @@ if uploaded_file is not None:
                 st.write("❌", skill)
 
         else:
-            st.success("🎉 No major skills are missing!")
+
+            st.success(
+                "🎉 No major skills are missing!"
+            )
 
 
-    # ---------------- JOB ROLE RECOMMENDATION ----------------
+    # =========================================================
+    #                JOB ROLE RECOMMENDATION
+    # =========================================================
+
     st.divider()
-
     st.subheader("💼 Recommended Job Roles")
 
     recommendations = []
@@ -287,9 +497,11 @@ if uploaded_file is not None:
         )
 
 
-    # ---------------- SUGGESTIONS ----------------
-    st.divider()
+    # =========================================================
+    #                  RESUME SUGGESTIONS
+    # =========================================================
 
+    st.divider()
     st.subheader("💡 Resume Improvement Suggestions")
 
     suggestions = []
@@ -322,6 +534,7 @@ if uploaded_file is not None:
             "Add a professional email address."
         )
 
+
     if not suggestions:
 
         st.success(
@@ -334,6 +547,11 @@ if uploaded_file is not None:
             st.write("🔹", suggestion)
 
 
-    # ---------------- RESUME PREVIEW ----------------
+    # =========================================================
+    #                    RESUME PREVIEW
+    # =========================================================
+
     with st.expander("📄 View Extracted Resume Text"):
         st.text(text)
+
+        
