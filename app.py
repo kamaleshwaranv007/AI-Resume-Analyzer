@@ -447,7 +447,7 @@ if uploaded_file is not None:
                 "🎉 No major skills are missing!"
             )
 
-            # ---------------- SKILL GAP ANALYSIS ----------------
+     # ---------------- SKILL GAP ANALYSIS ----------------
 
         st.write("### 📊 Skill Gap Analysis")
 
@@ -596,7 +596,162 @@ if uploaded_file is not None:
         for suggestion in suggestions:
             st.write("🔹", suggestion)
 
+    # =========================================================
+    #             SMART RESUME IMPROVEMENT
+    # =========================================================
 
+    st.divider()
+    st.subheader("🤖 Smart Resume Improvement")
+
+    smart_suggestions = []
+
+    # Summary check
+    has_summary = bool(
+        re.search(
+            r"\b(summary|profile|objective|career objective)\b",
+            text,
+            re.IGNORECASE
+        )
+    )
+
+    if not has_summary:
+        smart_suggestions.append(
+            ("⚠️ Professional Summary",
+             "Add a 2–3 line professional summary highlighting your skills, career goal and strengths.")
+        )
+    else:
+        smart_suggestions.append(
+            ("✅ Professional Summary",
+             "A professional summary is present in your resume.")
+        )
+
+
+    # Skills check
+    if len(found_skills) < 5:
+        smart_suggestions.append(
+            ("⚠️ Technical Skills",
+             "Add more relevant technical skills based on the job you are targeting.")
+        )
+    else:
+        smart_suggestions.append(
+            ("✅ Technical Skills",
+             f"Your resume contains {len(found_skills)} technical skills.")
+        )
+
+
+    # Project check
+    has_projects = bool(
+        re.search(
+            r"\b(project|projects)\b",
+            text,
+            re.IGNORECASE
+        )
+    )
+
+    if not has_projects:
+        smart_suggestions.append(
+            ("⚠️ Projects",
+             "Add academic, personal or internship projects with technologies used and results achieved.")
+        )
+    else:
+        smart_suggestions.append(
+            ("✅ Projects",
+             "Projects section detected. Try describing your contribution and measurable results.")
+        )
+
+
+    # Experience check
+    has_experience = bool(
+        re.search(
+            r"\b(experience|work experience|employment|internship)\b",
+            text,
+            re.IGNORECASE
+        )
+    )
+
+    if not has_experience:
+        smart_suggestions.append(
+            ("⚠️ Experience",
+             "Add internship, freelance, volunteer or practical experience if available.")
+        )
+    else:
+        smart_suggestions.append(
+            ("✅ Experience",
+             "Experience section detected. Use action verbs and measurable achievements.")
+        )
+
+
+    # Action words
+    action_words = [
+        "developed",
+        "created",
+        "designed",
+        "implemented",
+        "managed",
+        "built",
+        "analyzed",
+        "optimized",
+        "improved",
+        "tested",
+        "deployed"
+    ]
+
+    action_word_count = sum(
+        len(
+            re.findall(
+                r"\b" + word + r"\b",
+                text,
+                re.IGNORECASE
+            )
+        )
+        for word in action_words
+    )
+
+    if action_word_count < 2:
+        smart_suggestions.append(
+            ("⚠️ Action Words",
+             "Use strong action words such as Developed, Implemented, Designed, Built and Deployed.")
+        )
+    else:
+        smart_suggestions.append(
+            ("✅ Action Words",
+             f"Good use of action-oriented words detected ({action_word_count}).")
+        )
+
+
+    # Contact information
+    if not has_email:
+        smart_suggestions.append(
+            ("⚠️ Contact Information",
+             "Add a professional email address.")
+        )
+
+    if not has_phone:
+        smart_suggestions.append(
+            ("⚠️ Contact Information",
+             "Add a valid phone number.")
+        )
+
+
+    # Display suggestions
+    for title, message in smart_suggestions:
+
+        if title.startswith("✅"):
+            st.success(f"{title}\n\n{message}")
+
+        else:
+            st.warning(f"{title}\n\n{message}")
+
+
+    # Professional summary template
+    st.write("### ✨ Professional Summary Template")
+
+    st.info(
+        "Recent graduate with skills in "
+        + ", ".join(found_skills[:5])
+        + ". Passionate about developing practical solutions and "
+          "applying technical knowledge to real-world projects."
+    )
     # =========================================================
     #                    RESUME PREVIEW
     # =========================================================
