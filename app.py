@@ -447,7 +447,57 @@ if uploaded_file is not None:
                 "🎉 No major skills are missing!"
             )
 
+            # ---------------- SKILL GAP ANALYSIS ----------------
 
+        st.write("### 📊 Skill Gap Analysis")
+
+        skill_gap = 100 - match_percentage
+
+        gap_col1, gap_col2 = st.columns(2)
+
+        with gap_col1:
+            st.metric(
+                "📈 Skill Match",
+                f"{match_percentage}%"
+            )
+
+        with gap_col2:
+            st.metric(
+                "📉 Skill Gap",
+                f"{skill_gap}%"
+            )
+
+        st.progress(match_percentage / 100)
+
+        # Skill gap message
+        if match_percentage >= 80:
+            st.success(
+                "🎉 Excellent skill match! Your resume is highly suitable for this job."
+            )
+
+        elif match_percentage >= 60:
+            st.warning(
+                "👍 Good match, but adding some missing skills can improve your chances."
+            )
+
+        else:
+            st.error(
+                "⚠️ There is a significant skill gap. Consider learning the missing skills."
+            )
+
+        # Missing skills priority
+        if missing_skills:
+
+            st.write("### 🎯 Skills You Should Consider Learning")
+
+            for skill in missing_skills:
+                st.write("🔴", skill)
+
+        else:
+
+            st.success(
+                "✅ No important skills are missing from the job description!"
+            )
     # =========================================================
     #                JOB ROLE RECOMMENDATION
     # =========================================================
