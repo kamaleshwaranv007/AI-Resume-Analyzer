@@ -69,6 +69,50 @@ def extract_text(uploaded_file):
         )
 
     return ""
+
+# ---------------- KEYWORD ANALYSIS ----------------
+
+def extract_job_keywords(job_description, resume_text):
+    """
+    Find important keywords from the job description
+    that are missing or present in the resume.
+    """
+
+    common_words = {
+        "and", "the", "with", "for", "from", "this", "that",
+        "are", "you", "our", "your", "will", "have", "has",
+        "using", "into", "about", "looking", "experience",
+        "knowledge", "good", "strong", "work", "team",
+        "skills", "required", "preferred", "should"
+    }
+
+    words = re.findall(
+        r"\b[A-Za-z][A-Za-z0-9+#.-]{2,}\b",
+        job_description
+    )
+
+    resume_lower = resume_text.lower()
+
+    keywords = []
+
+    for word in words:
+        word_lower = word.lower()
+
+        if word_lower not in common_words:
+            if word_lower not in [k.lower() for k in keywords]:
+                keywords.append(word)
+
+    present_keywords = [
+        keyword for keyword in keywords
+        if keyword.lower() in resume_lower
+    ]
+
+    missing_keywords = [
+        keyword for keyword in keywords
+        if keyword.lower() not in resume_lower
+    ]
+
+    return keywords, present_keywords, missing_keywords
 # ---------------- PDF REPORT GENERATOR ----------------
 
 def create_report(
