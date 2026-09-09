@@ -204,15 +204,15 @@ def create_report(
     )
 
     if ats_suggestions:
-    for suggestion in ats_suggestions:
-        story.append(
+        for suggestion in ats_suggestions:
+          story.append(
             Paragraph(
                 f"• {suggestion}",
                 styles["BodyText"]
             )
         )
-else:
-    story.append(
+    else:
+         story.append(
         Paragraph(
             "Your resume is well structured for ATS.",
             styles["BodyText"]
