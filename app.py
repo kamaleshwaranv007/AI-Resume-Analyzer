@@ -937,6 +937,39 @@ if uploaded_file is not None:
         + ". Passionate about developing practical solutions and "
           "applying technical knowledge to real-world projects."
     )
+
+    # =========================================================
+    #              DOWNLOAD ANALYSIS REPORT
+    # =========================================================
+
+    st.divider()
+    st.subheader("📄 Download Analysis Report")
+
+    # Default values when Job Description is not provided
+    if not job_description.strip():
+        report_match_percentage = 0
+        report_missing_skills = []
+    else:
+        report_match_percentage = match_percentage
+        report_missing_skills = missing_skills
+
+    report_pdf = create_report(
+        score=score,
+        ats_score=ats_score,
+        found_skills=found_skills,
+        match_percentage=report_match_percentage,
+        missing_skills=report_missing_skills,
+        recommendations=recommendations,
+        ats_suggestions=ats_suggestions,
+        smart_suggestions=smart_suggestions
+    )
+
+    st.download_button(
+        label="⬇️ Download Resume Analysis Report",
+        data=report_pdf,
+        file_name="resume_analysis_report.pdf",
+        mime="application/pdf"
+    )
     # =========================================================
     #                    RESUME PREVIEW
     # =========================================================
