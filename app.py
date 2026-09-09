@@ -646,6 +646,35 @@ if uploaded_file is not None:
             "🎯 Job Match",
             f"{match_percentage}%"
         )
+        # ---------------- KEYWORD ANALYSIS ----------------
+
+        all_keywords, present_keywords, missing_keywords = extract_job_keywords(
+            job_description,
+            text
+        )
+
+        st.write("### 🔑 Important Job Keywords")
+
+        if all_keywords:
+            st.write(", ".join(all_keywords[:20]))
+        else:
+            st.write("No important keywords detected.")
+
+        st.write("### 🟢 Keywords Found in Resume")
+
+        if present_keywords:
+            for keyword in present_keywords:
+                st.write("✅", keyword)
+        else:
+            st.write("No matching keywords found.")
+
+        st.write("### 🔴 Keywords Missing from Resume")
+
+        if missing_keywords:
+            for keyword in missing_keywords:
+                st.write("❌", keyword)
+        else:
+            st.success("🎉 No important keywords are missing!")
 
 
         st.write("### ✅ Matching Skills")
