@@ -372,7 +372,27 @@ if uploaded_file is not None:
     with col3:
         st.metric("📝 Resume Words", len(text.split()))
 
+    # ---------------- RESUME QUALITY DASHBOARD ----------------
 
+    st.divider()
+    st.subheader("⭐ Resume Quality Dashboard")
+
+    d1, d2, d3, d4 = st.columns(4)
+
+    with d1:
+         st.metric("📄 Resume Score", f"{score}/100")
+
+    with d2:
+         st.metric("🤖 ATS Score", f"{ats_score}/100")
+
+    with d3:
+      if job_description.strip():
+         st.metric("🎯 Job Match", f"{match_percentage}%")
+      else:
+        st.metric("🎯 Job Match", "N/A")
+
+    with d4:
+        st.metric("🛠️ Skills", len(found_skills))
     # ---------------- SCORE BREAKDOWN ----------------
     st.markdown("### 📊 Score Breakdown")
 
