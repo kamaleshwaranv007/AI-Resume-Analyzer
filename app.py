@@ -579,7 +579,22 @@ if uploaded_file is not None:
 
 
     st.progress(ats_score / 100)
+    # ---------------- FINAL RESUME SCORE ----------------
 
+    # ATS contributes 30 points to the overall score
+    ats_contribution = round((ats_score / 100) * 30)
+
+    # Final score out of 100
+       score = min(
+       skill_score
+       + project_score
+       + education_score
+       + contact_score
+       + summary_score
+       + experience_score
+       + ats_contribution,
+       100
+       )
 
     # ---------------- ATS SECTION CHECK ----------------
     st.write("### 📑 Resume Sections")
