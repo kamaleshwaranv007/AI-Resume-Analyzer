@@ -585,16 +585,16 @@ if uploaded_file is not None:
     ats_contribution = round((ats_score / 100) * 30)
 
     # Final score out of 100
-       score = min(
+    score = min(
        skill_score
-       + project_score
-       + education_score
-       + contact_score
-       + summary_score
-       + experience_score
-       + ats_contribution,
-       100
-       )
+        + project_score
+        + education_score
+        + contact_score
+        + summary_score
+        + experience_score
+        + ats_contribution,
+         100
+     )
 
     # ---------------- ATS SECTION CHECK ----------------
     st.write("### 📑 Resume Sections")
