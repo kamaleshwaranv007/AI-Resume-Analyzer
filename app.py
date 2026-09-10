@@ -332,101 +332,101 @@ if uploaded_file is not None:
 
     # ---------------- IMPROVED RESUME SCORE ----------------
 
-# Technical Skills - 30 points
-skill_score = min(len(found_skills) * 3, 30)
+    # Technical Skills - 30 points
+    skill_score = min(len(found_skills) * 3, 30)
 
-# Projects - 20 points
-project_score = 20 if re.search(
-    r"\b(project|projects)\b",
-    text,
-    re.IGNORECASE
-) else 0
+    # Projects - 20 points
+    project_score = 20 if re.search(
+       r"\b(project|projects)\b",
+       text,
+       re.IGNORECASE
+    ) else 0
 
-# Education - 15 points
-education_score = 15 if re.search(
-    r"\b(education|degree|b\.e|b\.tech|bachelor|master)\b",
-    text,
-    re.IGNORECASE
-) else 0
+    # Education - 15 points
+    education_score = 15 if re.search(
+        r"\b(education|degree|b\.e|b\.tech|bachelor|master)\b",
+        text,
+        re.IGNORECASE
+    ) else 0
 
-# Contact Information - 15 points
-contact_score = 15 if re.search(
-    r"@|phone|mobile|contact",
-    text,
-    re.IGNORECASE
-) else 0
+    # Contact Information - 15 points
+    contact_score = 15 if re.search(
+        r"@|phone|mobile|contact",
+        text,
+        re.IGNORECASE
+    ) else 0
 
-# Professional Summary - 10 points
-summary_score = 10 if re.search(
-    r"\b(summary|profile|objective|career objective)\b",
-    text,
-    re.IGNORECASE
-) else 0
+    # Professional Summary - 10 points
+    summary_score = 10 if re.search(
+        r"\b(summary|profile|objective|career objective)\b",
+        text,
+        re.IGNORECASE
+    ) else 0
 
-# Experience - 10 points
-experience_score = 10 if re.search(
-    r"\b(experience|work experience|employment|internship)\b",
-    text,
-    re.IGNORECASE
-) else 0
+    # Experience - 10 points
+    experience_score = 10 if re.search(
+        r"\b(experience|work experience|employment|internship)\b",
+        text,
+        re.IGNORECASE
+    ) else 0
 
-# Final Resume Score
-score = min(
-    skill_score
-    + project_score
-    + education_score
-    + contact_score
-    + summary_score
-    + experience_score,
-    100
-)
+    # Final Resume Score
+    score = min(
+       skill_score
+        + project_score
+        + education_score
+        + contact_score
+        + summary_score
+        + experience_score,
+         100
+     )
     # ---------------- DASHBOARD ----------------
-st.divider()
-st.subheader("📊 Resume Performance")
+    st.divider()
+    st.subheader("📊 Resume Performance")
 
-col1, col2, col3 = st.columns(3)
-with col1:
-    st.metric("📄 Resume Score", f"{score}/100")
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.metric("📄 Resume Score", f"{score}/100")
 
-with col2:
-    st.metric("🛠️ Skills Found", len(found_skills))
+    with col2:
+        st.metric("🛠️ Skills Found", len(found_skills))
 
-with col3:
-    st.metric("📝 Resume Words", len(text.split()))
+    with col3:
+        st.metric("📝 Resume Words", len(text.split()))
 
     # ---------------- SCORE BREAKDOWN ----------------
 
-st.markdown("### 📊 Score Breakdown")
+    st.markdown("### 📊 Score Breakdown")
 
-b1, b2 = st.columns(2)
+    b1, b2 = st.columns(2)
 
-b1.write("**🛠️ Technical Skills**")
-b1.progress(skill_score / 30)
-b1.caption(f"{skill_score}/30 points")
+    b1.write("**🛠️ Technical Skills**")
+    b1.progress(skill_score / 30)
+    b1.caption(f"{skill_score}/30 points")
 
-b2.write("**📁 Projects**")
-b2.progress(project_score / 20)
-b2.caption(f"{project_score}/20 points")
+    b2.write("**📁 Projects**")
+    b2.progress(project_score / 20)
+    b2.caption(f"{project_score}/20 points")
 
-b3, b4 = st.columns(2)
+    b3, b4 = st.columns(2)
 
-b3.write("**🎓 Education**")
-b3.progress(education_score / 15)
-b3.caption(f"{education_score}/15 points")
+    b3.write("**🎓 Education**")
+    b3.progress(education_score / 15)
+    b3.caption(f"{education_score}/15 points")
 
-b4.write("**📞 Contact Information**")
-b4.progress(contact_score / 15)
-b4.caption(f"{contact_score}/15 points")
+    b4.write("**📞 Contact Information**")
+    b4.progress(contact_score / 15)
+    b4.caption(f"{contact_score}/15 points")
 
-b5, b6 = st.columns(2)
+    b5, b6 = st.columns(2)
 
-b5.write("**📝 Professional Summary**")
-b5.progress(summary_score / 10)
-b5.caption(f"{summary_score}/10 points")
+    b5.write("**📝 Professional Summary**")
+    b5.progress(summary_score / 10)
+    b5.caption(f"{summary_score}/10 points")
 
-b6.write("**💼 Experience**")
-b6.progress(experience_score / 10)
-b6.caption(f"{experience_score}/10 points")
+    b6.write("**💼 Experience**")
+    b6.progress(experience_score / 10)
+    b6.caption(f"{experience_score}/10 points")
 
     # =========================================================
     #                    ATS ANALYSIS
