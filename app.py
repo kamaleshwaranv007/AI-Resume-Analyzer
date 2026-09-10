@@ -381,19 +381,18 @@ score = min(
     100
 )
     # ---------------- DASHBOARD ----------------
-    st.divider()
-    st.subheader("📊 Resume Performance")
+st.divider()
+st.subheader("📊 Resume Performance")
 
-    col1, col2, col3 = st.columns(3)
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.metric("📄 Resume Score", f"{score}/100")
 
-    with col1:
-        st.metric("📄 Resume Score", f"{score}/100")
+with col2:
+    st.metric("🛠️ Skills Found", len(found_skills))
 
-    with col2:
-        st.metric("🛠️ Skills Found", len(found_skills))
-
-    with col3:
-        st.metric("📝 Resume Words", len(text.split()))
+ with col3:
+    st.metric("📝 Resume Words", len(text.split()))
 
     # ---------------- SCORE BREAKDOWN ----------------
 
