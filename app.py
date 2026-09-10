@@ -330,7 +330,7 @@ if uploaded_file is not None:
             found_skills.append(skill)
 
 
-# ---------------- IMPROVED RESUME SCORE ----------------
+    # ---------------- IMPROVED RESUME SCORE ----------------
 
 # Technical Skills - 30 points
 skill_score = min(len(found_skills) * 3, 30)
@@ -380,7 +380,6 @@ score = min(
     + experience_score,
     100
 )
-
     # ---------------- DASHBOARD ----------------
     st.divider()
     st.subheader("📊 Resume Performance")
@@ -402,39 +401,34 @@ st.markdown("### 📊 Score Breakdown")
 
 b1, b2 = st.columns(2)
 
-with b1:
-    st.write("**🛠️ Technical Skills**")
-    st.progress(skill_score / 30)
-    st.caption(f"{skill_score}/30 points")
+b1.write("**🛠️ Technical Skills**")
+b1.progress(skill_score / 30)
+b1.caption(f"{skill_score}/30 points")
 
-with b2:
-    st.write("**📁 Projects**")
-    st.progress(project_score / 20)
-    st.caption(f"{project_score}/20 points")
+b2.write("**📁 Projects**")
+b2.progress(project_score / 20)
+b2.caption(f"{project_score}/20 points")
 
 b3, b4 = st.columns(2)
 
-with b3:
-    st.write("**🎓 Education**")
-    st.progress(education_score / 15)
-    st.caption(f"{education_score}/15 points")
+b3.write("**🎓 Education**")
+b3.progress(education_score / 15)
+b3.caption(f"{education_score}/15 points")
 
-with b4:
-    st.write("**📞 Contact Information**")
-    st.progress(contact_score / 15)
-    st.caption(f"{contact_score}/15 points")
+b4.write("**📞 Contact Information**")
+b4.progress(contact_score / 15)
+b4.caption(f"{contact_score}/15 points")
 
 b5, b6 = st.columns(2)
 
-with b5:
-    st.write("**📝 Professional Summary**")
-    st.progress(summary_score / 10)
-    st.caption(f"{summary_score}/10 points")
+b5.write("**📝 Professional Summary**")
+b5.progress(summary_score / 10)
+b5.caption(f"{summary_score}/10 points")
 
-with b6:
-    st.write("**💼 Experience**")
-    st.progress(experience_score / 10)
-    st.caption(f"{experience_score}/10 points")
+b6.write("**💼 Experience**")
+b6.progress(experience_score / 10)
+b6.caption(f"{experience_score}/10 points")
+
     # =========================================================
     #                    ATS ANALYSIS
     # =========================================================
