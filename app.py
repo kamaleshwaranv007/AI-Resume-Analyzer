@@ -391,7 +391,7 @@ with col1:
 with col2:
     st.metric("🛠️ Skills Found", len(found_skills))
 
- with col3:
+with col3:
     st.metric("📝 Resume Words", len(text.split()))
 
     # ---------------- SCORE BREAKDOWN ----------------
