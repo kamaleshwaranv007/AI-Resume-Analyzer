@@ -71,7 +71,7 @@ def extract_text(uploaded_file):
     return ""
 
 # ---------------- KEYWORD ANALYSIS ----------------
- def extract_job_keywords(job_description, resume_text):
+def extract_job_keywords(job_description, resume_text):
     """
     Find important keywords from the job description
     that are missing or present in the resume.
