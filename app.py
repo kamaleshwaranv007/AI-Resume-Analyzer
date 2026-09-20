@@ -71,8 +71,7 @@ def extract_text(uploaded_file):
     return ""
 
 # ---------------- KEYWORD ANALYSIS ----------------
-
-def extract_job_keywords(job_description, resume_text):
+ def extract_job_keywords(job_description, resume_text):
     """
     Find important keywords from the job description
     that are missing or present in the resume.
@@ -83,24 +82,52 @@ def extract_job_keywords(job_description, resume_text):
         "are", "you", "our", "your", "will", "have", "has",
         "using", "into", "about", "looking", "experience",
         "knowledge", "good", "strong", "work", "team",
-        "skills", "required", "preferred", "should"
+        "skills", "required", "preferred", "should",
+        # extra filler words that aren't real skills
+        "ideal", "candidate", "candidates", "like", "such",
+        "plus", "familiarity", "role", "job", "responsibilities",
+        "systems", "system", "design", "libraries", "library",
+        "tools", "tool", "able", "must", "can", "would",
+        "including", "include", "includes", "years", "year",
+        "etc", "also", "any", "all", "some", "other", "more",
+        "most", "than", "then", "them", "their", "they",
+    }
+
+    # Curated technical/skill terms - always kept when found,
+    # even if short or otherwise ambiguous (e.g. "git", "aws")
+    known_skills = {
+        "python", "java", "c++", "javascript", "typescript", "flask",
+        "django", "fastapi", "sql", "mysql", "postgresql", "mongodb",
+        "nosql", "git", "github", "gitlab", "docker", "kubernetes",
+        "aws", "azure", "gcp", "rest", "api", "apis", "html", "css",
+        "react", "angular", "vue", "node", "nodejs", "pandas", "numpy",
+        "matplotlib", "tensorflow", "pytorch", "nlp", "linux", "bash",
+        "excel", "agile", "scrum",
     }
 
     words = re.findall(
-        r"\b[A-Za-z][A-Za-z0-9+#.-]{2,}\b",
+        r"\b[A-Za-z][A-Za-z0-9+#.-]{1,}\b",
         job_description
     )
 
     resume_lower = resume_text.lower()
 
     keywords = []
-
     for word in words:
         word_lower = word.lower()
 
-        if word_lower not in common_words:
-            if word_lower not in [k.lower() for k in keywords]:
-                keywords.append(word)
+        if word_lower in common_words:
+            continue
+
+        # skip already-added duplicates (case-insensitive)
+        if word_lower in [k.lower() for k in keywords]:
+            continue
+
+        # keep it only if it's a known skill term OR it isn't a
+        # plain generic dictionary word (heuristic: length > 2
+        # and not in common_words already covers most noise)
+        if word_lower in known_skills or len(word_lower) > 2:
+            keywords.append(word)
 
     present_keywords = [
         keyword for keyword in keywords
@@ -113,6 +140,8 @@ def extract_job_keywords(job_description, resume_text):
     ]
 
     return keywords, present_keywords, missing_keywords
+     
+
 # ---------------- PDF REPORT GENERATOR ----------------
 
 def create_report(
