@@ -15,6 +15,8 @@ st.set_page_config(
     page_icon="📄",
     layout="wide"
 )
+from professional_theme import apply_professional_theme
+apply_professional_theme()
 
 st.title("📄 AI Resume Analyzer")
 st.write("Analyze your resume, identify skills and check job compatibility.")
