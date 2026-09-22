@@ -1,4 +1,4 @@
- import streamlit as st
+import streamlit as st
 
 def apply_professional_theme():
     """
@@ -194,4 +194,4 @@ def section_card_start():
 
 def section_card_end():
     st.markdown('</div>', unsafe_allow_html=True)
-    
+ 
