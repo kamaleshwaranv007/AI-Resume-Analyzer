@@ -106,18 +106,52 @@ def apply_professional_theme():
             color: #1c1c1c !important;
         }
 
-        /* Uploaded file "chip" that shows after upload */
-        div[data-testid="stFileUploaderFile"] {
-            background-color: #f5f8ff !important;
-            border: 1px solid #d6e0f5 !important;
+        /* "Browse files" button inside the upload box */
+        section[data-testid="stFileUploaderDropzone"] button {
+            background-color: #1e6fd9 !important;
+            color: white !important;
+            border: none !important;
             border-radius: 8px !important;
+            font-weight: 600 !important;
+        }
+        section[data-testid="stFileUploaderDropzone"] button:hover {
+            background-color: #1859ad !important;
+        }
+        section[data-testid="stFileUploaderDropzone"] button p,
+        section[data-testid="stFileUploaderDropzone"] button span {
+            color: white !important;
+        }
+
+        /* Catch-all: any secondary/base button Streamlit renders */
+        button[kind="secondary"], button[data-testid="baseButton-secondary"] {
+            background-color: #1e6fd9 !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 8px !important;
+        }
+        button[kind="secondary"] p, button[data-testid="baseButton-secondary"] p {
+            color: white !important;
+        }
+
+        /* Uploaded file "chip" that shows after upload - broad override */
+        div[data-testid="stFileUploader"] section,
+        div[data-testid="stFileUploader"] section > div,
+        div[data-testid="stFileUploaderFile"],
+        div[data-testid="stFileUploaderFile"] div,
+        div[data-testid="stFileUploaderFileName"] {
+            background-color: #f5f8ff !important;
             color: #1c1c1c !important;
         }
-        div[data-testid="stFileUploaderFile"] * {
+        div[data-testid="stFileUploader"] * {
             color: #1c1c1c !important;
+            fill: #1c1c1c !important;
         }
-        div[data-testid="stFileUploaderFile"] small {
+        div[data-testid="stFileUploader"] small {
             color: #2b3a5c !important;
+        }
+        /* Catch-all: any black/dark inline-styled background inside uploader */
+        div[data-testid="stFileUploader"] [style*="background"] {
+            background-color: #f5f8ff !important;
         }
 
         /* Text area / input boxes */
