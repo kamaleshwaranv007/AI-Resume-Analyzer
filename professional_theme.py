@@ -12,48 +12,52 @@ def apply_professional_theme():
         <style>
         /* Overall app background */
         .stApp {
-            background-color: #0e1117;
+            background-color: #ffffff;
         }
 
         /* Main title styling */
         h1 {
             font-family: 'Segoe UI', sans-serif;
             font-weight: 700;
-            color: #ffffff;
+            color: #1a1a2e;
             padding-bottom: 0px;
         }
 
         h2, h3 {
             font-family: 'Segoe UI', sans-serif;
             font-weight: 600;
-            color: #e6e6e6;
-            border-bottom: 1px solid #2d2d3a;
+            color: #1a1a2e;
+            border-bottom: 1px solid #e0e6f0;
             padding-bottom: 6px;
             margin-top: 24px;
         }
 
+        p, span, label, li {
+            color: #333333;
+        }
+
         /* Metric cards (Resume Score, ATS Score etc.) */
         div[data-testid="stMetric"] {
-            background-color: #1a1d24;
-            border: 1px solid #2d2d3a;
+            background-color: #f5f8ff;
+            border: 1px solid #d6e0f5;
             border-radius: 10px;
             padding: 16px 12px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
         }
 
         div[data-testid="stMetricValue"] {
             font-size: 26px;
             font-weight: 700;
-            color: #4CAF50;
+            color: #1e6fd9;
         }
 
         div[data-testid="stMetricLabel"] {
-            color: #a0a0b0;
+            color: #5a6b8c;
         }
 
         /* Buttons */
         .stButton > button {
-            background-color: #4CAF50;
+            background-color: #1e6fd9;
             color: white;
             border-radius: 8px;
             border: none;
@@ -62,9 +66,9 @@ def apply_professional_theme():
             transition: all 0.2s ease-in-out;
         }
         .stButton > button:hover {
-            background-color: #43a047;
+            background-color: #1859ad;
             transform: translateY(-1px);
-            box-shadow: 0 4px 10px rgba(76,175,80,0.35);
+            box-shadow: 0 4px 10px rgba(30,111,217,0.3);
         }
 
         /* Success / warning / error boxes */
@@ -75,41 +79,41 @@ def apply_professional_theme():
 
         /* Progress bars */
         div[data-testid="stProgress"] > div > div {
-            background-color: #4CAF50;
+            background-color: #1e6fd9;
             border-radius: 6px;
         }
 
         /* File uploader box */
         section[data-testid="stFileUploaderDropzone"] {
-            background-color: #1a1d24;
-            border: 1.5px dashed #3a3a4a;
+            background-color: #f5f8ff;
+            border: 1.5px dashed #b8cdf0;
             border-radius: 10px;
         }
 
         /* Text area / input boxes */
         textarea, .stTextArea textarea {
-            background-color: #1a1d24 !important;
-            border: 1px solid #2d2d3a !important;
+            background-color: #ffffff !important;
+            border: 1px solid #d6e0f5 !important;
             border-radius: 8px !important;
-            color: #e6e6e6 !important;
+            color: #1a1a2e !important;
         }
 
         /* DataFrames / tables */
         div[data-testid="stDataFrame"] {
-            border: 1px solid #2d2d3a;
+            border: 1px solid #d6e0f5;
             border-radius: 8px;
             overflow: hidden;
         }
 
         /* Sidebar */
         section[data-testid="stSidebar"] {
-            background-color: #12141a;
-            border-right: 1px solid #2d2d3a;
+            background-color: #f5f8ff;
+            border-right: 1px solid #d6e0f5;
         }
 
         /* Divider lines between sections */
         hr {
-            border-color: #2d2d3a;
+            border-color: #e0e6f0;
         }
         </style>
     """, unsafe_allow_html=True)
@@ -118,7 +122,7 @@ def apply_professional_theme():
 def section_card_start():
     """Optional: wrap a section in a card-like container. Use with section_card_end()."""
     st.markdown(
-        '<div style="background-color:#1a1d24; border:1px solid #2d2d3a; '
+        '<div style="background-color:#f5f8ff; border:1px solid #d6e0f5; '
         'border-radius:10px; padding:18px; margin-bottom:16px;">',
         unsafe_allow_html=True
     )
@@ -126,4 +130,4 @@ def section_card_start():
 
 def section_card_end():
     st.markdown('</div>', unsafe_allow_html=True)
-  
+    
