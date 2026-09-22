@@ -10,30 +10,35 @@ def apply_professional_theme():
 
     st.markdown("""
         <style>
+        /* Import Google Fonts - Poppins for headings, Inter for body */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
+
         /* Overall app background */
         .stApp {
             background-color: #ffffff;
+            font-family: 'Inter', sans-serif;
         }
 
-        /* Main title styling */
+        /* Main title styling - distinct heading font */
         h1 {
-            font-family: 'Segoe UI', sans-serif;
-            font-weight: 700;
-            color: #1a1a2e;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+            color: #10143d;
             padding-bottom: 0px;
         }
 
         h2, h3 {
-            font-family: 'Segoe UI', sans-serif;
-            font-weight: 600;
-            color: #1a1a2e;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            color: #10143d;
             border-bottom: 1px solid #e0e6f0;
             padding-bottom: 6px;
             margin-top: 24px;
         }
 
-        p, span, label, li {
-            color: #333333;
+        /* Brighter, higher-contrast body text */
+        p, span, label, li, div {
+            color: #1c1c1c;
         }
 
         /* Metric cards (Resume Score, ATS Score etc.) */
@@ -46,27 +51,31 @@ def apply_professional_theme():
         }
 
         div[data-testid="stMetricValue"] {
+            font-family: 'Poppins', sans-serif;
             font-size: 26px;
             font-weight: 700;
             color: #1e6fd9;
         }
 
         div[data-testid="stMetricLabel"] {
-            color: #5a6b8c;
+            color: #2b3a5c;
+            font-weight: 500;
         }
 
-        /* Buttons */
-        .stButton > button {
-            background-color: #1e6fd9;
-            color: white;
+        /* Buttons (including Download button) */
+        .stButton > button,
+        .stDownloadButton > button {
+            background-color: #1e6fd9 !important;
+            color: white !important;
             border-radius: 8px;
             border: none;
             padding: 8px 20px;
             font-weight: 600;
             transition: all 0.2s ease-in-out;
         }
-        .stButton > button:hover {
-            background-color: #1859ad;
+        .stButton > button:hover,
+        .stDownloadButton > button:hover {
+            background-color: #1859ad !important;
             transform: translateY(-1px);
             box-shadow: 0 4px 10px rgba(30,111,217,0.3);
         }
@@ -76,6 +85,10 @@ def apply_professional_theme():
             border-radius: 8px;
             padding: 14px;
         }
+        div[data-testid="stAlert"] p {
+            color: #1c1c1c;
+            font-weight: 500;
+        }
 
         /* Progress bars */
         div[data-testid="stProgress"] > div > div {
@@ -83,11 +96,28 @@ def apply_professional_theme():
             border-radius: 6px;
         }
 
-        /* File uploader box */
+        /* File uploader dropzone box */
         section[data-testid="stFileUploaderDropzone"] {
             background-color: #f5f8ff;
             border: 1.5px dashed #b8cdf0;
             border-radius: 10px;
+        }
+        section[data-testid="stFileUploaderDropzone"] * {
+            color: #1c1c1c !important;
+        }
+
+        /* Uploaded file "chip" that shows after upload */
+        div[data-testid="stFileUploaderFile"] {
+            background-color: #f5f8ff !important;
+            border: 1px solid #d6e0f5 !important;
+            border-radius: 8px !important;
+            color: #1c1c1c !important;
+        }
+        div[data-testid="stFileUploaderFile"] * {
+            color: #1c1c1c !important;
+        }
+        div[data-testid="stFileUploaderFile"] small {
+            color: #2b3a5c !important;
         }
 
         /* Text area / input boxes */
@@ -95,7 +125,7 @@ def apply_professional_theme():
             background-color: #ffffff !important;
             border: 1px solid #d6e0f5 !important;
             border-radius: 8px !important;
-            color: #1a1a2e !important;
+            color: #10143d !important;
         }
 
         /* DataFrames / tables */
@@ -131,6 +161,4 @@ def section_card_start():
 def section_card_end():
     st.markdown('</div>', unsafe_allow_html=True)
     
-
-
-
+            
