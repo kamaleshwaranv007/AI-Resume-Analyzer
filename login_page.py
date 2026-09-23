@@ -5,7 +5,7 @@ import streamlit as st
 # (username: password) - change these to your own
 # ============================================
 USERS = {
-    "KAMALESHWARAN": "Kamal007",
+    "KAMALESHWARAN":"Kamal007",
 }
 
 def login_page():
