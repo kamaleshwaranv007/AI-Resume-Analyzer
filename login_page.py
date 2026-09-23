@@ -18,7 +18,7 @@ def login_page():
     password = st.text_input("Password", type="password")
 
     if st.button("Login"):
-        if username in USERS and USERS[username] == password:
+        if username.strip() in USERS and USERS[username.strip()] == password.strip():
             st.session_state["logged_in"] = True
             st.session_state["username"] = username
             st.rerun()  # reload the page so the main app shows
